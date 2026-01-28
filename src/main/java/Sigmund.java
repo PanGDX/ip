@@ -1,8 +1,17 @@
 import java.util.Scanner;
 
 public class Sigmund {
-    public static String[] storage = new String[100];
+    public static Task[] storage = new Task[100];
     public static int itemCount = 0;
+
+    public static void printList() {
+        for (int i = 0; i < itemCount; i++) {
+            String tick = storage[i].getDoneStatus() ? "[X]" : "[ ]";
+            String listItem = "%d." + tick + " %s";
+            String result = String.format(listItem, i + 1, storage[i].getTaskDescription());
+            System.out.println(result);
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -17,22 +26,34 @@ public class Sigmund {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String line = scanner.nextLine();
+            String line = scanner.nextLine().toLowerCase();
             System.out.println("____________________________________________________________");
 
-            if (line.toLowerCase().equals("bye") || line.toLowerCase().equals("exit")) {
+            if (line.equals("bye") || line.equals("exit")) {
                 System.out.println("BYE BYE! See you again!");
                 System.out.println("____________________________________________________________");
                 break;
-            }
-            else if (line.equals("list")) {
-                for (int i = 0; i < itemCount; i++) {
-                    System.out.println((i + 1) + ". " + storage[i]);
+            } else if (line.equals("list")) {
+                System.out.println("Here are the tasks in your list!");
+                printList();
+            } else if (line.contains("mark")) {
+                int taskNumber = Integer.parseInt(line.split(" ")[1]);
+                if (taskNumber <= itemCount && taskNumber != 0) {
+                    if (line.contains("unmark")) {
+                        storage[taskNumber - 1].setDoneStatus(false);
+                        System.out.println("OK, I've marked this task as not done yet:");
+                        printList();
+                    } else {
+                        storage[taskNumber - 1].setDoneStatus(true);
+                        System.out.println("GREAT JOB! I've marked this task as done::");
+                        printList();
+                    }
+                } else {
+                    System.out.println("Aww you haven't added THAT many tasks!");
                 }
-            } 
-            else {
-                // Save the input to our class-wide variable
-                storage[itemCount] = line;
+            } else {
+                Task newTask = new Task(false, line);
+                storage[itemCount] = newTask;
                 itemCount++;
                 System.out.println("added: " + line);
             }
