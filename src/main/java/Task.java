@@ -22,4 +22,8 @@ public class Task {
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
     }
+
+    public String getType() {
+        return "task";
+    }
 }
