@@ -12,17 +12,21 @@ then
     rm ACTUAL.TXT
 fi
 
-# compile the code into the bin folder, terminates if error occurred
+# compile the code into the bin folder
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*.java
 then
     echo "********** BUILD FAILURE **********"
     exit 1
 fi
 
-# run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Duke < input.txt > ACTUAL.TXT
+# run the program and redirect output
+java -classpath ../bin Sigmund < input.txt > ACTUAL.TXT
 
-# convert to UNIX format
+
+# This removes the \u001B[...m sequences so diff doesn't see them
+sed -i 's/\x1b\[[0-9;]*m//g' ACTUAL.TXT
+
+# compare the output
 cp EXPECTED.TXT EXPECTED-UNIX.TXT
 dos2unix ACTUAL.TXT EXPECTED-UNIX.TXT
 

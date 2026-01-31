@@ -26,7 +26,7 @@ public class Sigmund {
                 typeBracket = "[Event]";
                 suffixTimeString = " (from: %s to: %s)";
                 suffixTimeString = String.format(suffixTimeString, ((Event) task).getEventStartTime(),
-                        ((Event) task).getEventStartTime());
+                        ((Event) task).getEventEndTime());
                 break;
             default:
                 typeBracket = "";
