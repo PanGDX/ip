@@ -1,8 +1,11 @@
 public class Event extends Task {
-    private String eventTime;
+    private String eventStartTime;
+    private String eventEndTime;
 
-    public Event(boolean isDone, String taskDescription, String eventTime) {
+    public Event(boolean isDone, String taskDescription, String eventStartTime, String eventEndTime) {
         super(isDone, taskDescription);
+        this.eventStartTime = eventStartTime;
+        this.eventEndTime = eventEndTime;
     }
 
     @Override
@@ -10,11 +13,19 @@ public class Event extends Task {
         return "event";
     }
 
-    public String getEventTime() {
-        return this.eventTime;
+    public String getEventStartTime() {
+        return this.eventStartTime;
     }
 
-    public void setEventTime(String eventTime) {
-        this.eventTime = eventTime;
+    public void setEventStartTime(String eventStartTime) {
+        this.eventStartTime = eventStartTime;
+    }
+
+    public String getEventEndTime() {
+        return this.eventEndTime;
+    }
+
+    public void setEventEndTime(String eventEndTime) {
+        this.eventEndTime = eventEndTime;
     }
 }
