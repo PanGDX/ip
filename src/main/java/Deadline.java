@@ -1,21 +1,20 @@
-public class Deadline extends Task {
+public class Deadline extends Todo {
     private String deadlineTime;
 
     public Deadline(boolean isDone, String taskDescription, String deadlineTime) {
-        super(isDone, taskDescription);
+        super(taskDescription);
         this.deadlineTime = deadlineTime;
-    }
-
-    @Override
-    public String getType() {
-        return "deadline";
     }
 
     public String getDeadlineTime() {
         return this.deadlineTime;
     }
 
-    public void setDeadlineTime(String deadlineTime) {
-        this.deadlineTime = deadlineTime;
+    @Override
+    public String toString() {
+        String tickString = isDone ? "[x]" : "[ ]";
+        String suffixTimeString = " (by: %s)";
+        suffixTimeString = String.format(suffixTimeString, this.deadlineTime);
+        return String.format("[Deadline]%s %s %s", tickString, this.taskDescription, suffixTimeString);
     }
 }

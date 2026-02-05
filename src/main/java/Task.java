@@ -1,18 +1,8 @@
 public class Task {
-    private boolean isDone;
-    private String taskDescription;
+    protected String taskDescription;
 
-    public Task(boolean isDone, String taskDescription) {
-        this.isDone = isDone;
+    public Task(String taskDescription) {
         this.taskDescription = taskDescription;
-    }
-
-    public boolean getDoneStatus() {
-        return isDone;
-    }
-
-    public void setDoneStatus(boolean isDone) {
-        this.isDone = isDone;
     }
 
     public String getTaskDescription() {
@@ -23,7 +13,8 @@ public class Task {
         this.taskDescription = taskDescription;
     }
 
-    public String getType() {
-        return "task";
+    @Override
+    public String toString() {
+        return this.taskDescription;
     }
 }
