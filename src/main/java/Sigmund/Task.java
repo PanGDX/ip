@@ -1,4 +1,6 @@
-public class Task {
+package Sigmund;
+
+public abstract class Task {
     protected String taskDescription;
 
     public Task(String taskDescription) {

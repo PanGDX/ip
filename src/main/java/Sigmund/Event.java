@@ -1,3 +1,5 @@
+package Sigmund;
+
 public class Event extends Todo {
     private String eventStartTime;
     private String eventEndTime;

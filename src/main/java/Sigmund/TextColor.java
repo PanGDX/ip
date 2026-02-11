@@ -1,3 +1,5 @@
+package Sigmund;
+
 public enum TextColor {
     RED("\u001B[31m"),
     GREEN("\u001B[32m"),
