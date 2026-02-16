@@ -1,10 +1,17 @@
-todo read book
-deadline return book
-Sunday 5pm
-event project meeting
-Monday 2pm
-Monday 4pm
+hello
+list
+help
+todo DON'T beat my highscore
+deadline submit my homework
+June
+event interview
+6am
+6pm
 list
 mark 1
+unmark 2
 unmark 1
-bye
+delete hellomyfriend
+mark hellomyfriend
+list
+exit

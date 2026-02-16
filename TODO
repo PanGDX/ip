@@ -1,0 +1,14 @@
+- [x] implement help
+- [ ] Level 6: Delete
+  - [x] Change storage to ArrayList<Task>
+  - [x] implement delete catching
+  - [ ] push and start level 7
+- [ ] Level 7: Save
+  - [ ] folder does not exist
+  - [ ] file does not exist. csv file
+  - [ ] file and folder does exist. read from them. csv file
+- [ ] AJar
+  - [ ]  Package the App as a JAR file
+  - [ ] text-ui-test with JAR file
+
+- [ ] Push tags, merge branches
