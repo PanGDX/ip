@@ -3,9 +3,10 @@ package Sigmund;
 public class Deadline extends Todo {
     private String deadlineTime;
 
-    public Deadline(boolean isDone, String taskDescription, String deadlineTime) {
+    public Deadline(String taskDescription, String deadlineTime) {
         super(taskDescription);
         this.deadlineTime = deadlineTime;
+        this.isDone = false;
     }
 
     public String getDeadlineTime() {
@@ -18,5 +19,10 @@ public class Deadline extends Todo {
         String suffixTimeString = " (by: %s)";
         suffixTimeString = String.format(suffixTimeString, this.deadlineTime);
         return String.format("[Deadline]%s %s %s", tickString, this.taskDescription, suffixTimeString);
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "Deadline | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + deadlineTime;
     }
 }
