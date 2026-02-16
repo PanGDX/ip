@@ -12,20 +12,34 @@ class TaskList {
         this.tasks = storage.load();
     }
 
+    private int getValidTaskIndexFromString(String s) throws SigmundException, NumberFormatException {
+
+        int taskNumber = Integer.parseInt(s); // throws NumberFormatException by default
+
+        if (taskNumber > tasks.size() || taskNumber == 0) {
+            throw new SigmundException("INVALID task number! CHILL OUT");
+        }
+        return taskNumber;
+    }
+
     public void addTask(Todo task) {
         if (task != null) {
             tasks.add(task);
-            System.out.println("Got it. I've added this task:\n  " + task);
+            printColoredText("Got it! Added: ", TextColor.BLUE);
+            printColoredText("    " + task.toString(), TextColor.BLUE);
+            printColoredText(String.format("You now have %d tasks in the list", tasks.size() - 1), TextColor.BLUE);
             save(); // Auto-save
         }
     }
 
-    public void deleteTask(int index) {
-        if (index >= 0 && index < tasks.size()) {
-            Todo removed = tasks.remove(index);
-            System.out.println("Noted. I've removed this task:\n  " + removed);
-            save(); // Auto-save
-        }
+    public void deleteTask(String arg) throws NumberFormatException, SigmundException {
+        int taskNumber = getValidTaskIndexFromString(arg);
+
+        printColoredText("Noted. I've removed this task:", TextColor.BLUE);
+        printColoredText(" " + tasks.get(taskNumber - 1).toString(), TextColor.BLUE);
+        tasks.remove(taskNumber - 1);
+        save();
+        printColoredText("Now you have " + tasks.size() + " tasks in the list", TextColor.BLUE);
     }
 
     public void printList() {
@@ -51,8 +65,8 @@ class TaskList {
         storage.save(tasks);
     }
 
-    public void markLogic(String line) {
-        int taskNumber = Integer.parseInt(line.split(" ")[1]);
+    public void markLogic(String line) throws NumberFormatException, SigmundException {
+        int taskNumber = getValidTaskIndexFromString(line.split(" ")[1]);
 
         if (taskNumber > tasks.size() || taskNumber == 0) {
             printColoredText("INVALID! CHILL OUT", TextColor.BLUE);

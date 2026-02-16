@@ -2,7 +2,6 @@ package Sigmund;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
-import Sigmund.Printer;
 import static Sigmund.Printer.*;
 
 public class Sigmund {
@@ -31,7 +30,7 @@ public class Sigmund {
         switch (command.toLowerCase()) {
             case "bye":
             case "exit":
-                Printer.printColoredText(LINE, TextColor.BLUE);
+                printColoredText(LINE, TextColor.BLUE);
                 printColoredText("BYE BYE! See you again!", TextColor.BLUE);
                 throw new BreakSignal("");
 
@@ -50,7 +49,7 @@ public class Sigmund {
                 break;
 
             case "delete":
-                deleteTask(description);
+                taskList.deleteTask(description);
                 break;
 
             case "deadline":
@@ -78,7 +77,6 @@ public class Sigmund {
                 throw new SigmundException("I'm sorry, but I don't know what that means :-(");
         }
         taskList.addTask(newTask);
-        System.out.println(LINE);
     }
 
     public static void main(String[] args) {
@@ -102,14 +100,8 @@ public class Sigmund {
             } finally {
                 System.out.println(LINE);
             }
-
         }
         scanner.close();
     }
 
 }
-
-// list ok
-// issue: everything is to lower case
-// issue: too many ----- lines
-// issue: deadline/event/todo
