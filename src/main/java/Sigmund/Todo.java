@@ -1,15 +1,11 @@
 package Sigmund;
 
-public class Todo extends Task {
+public class Todo {
     protected boolean isDone;
-
-    public Todo(boolean isDone, String taskDescription) {
-        super(taskDescription);
-        this.isDone = isDone;
-    }
+    protected String taskDescription;
 
     public Todo(String taskDescription) {
-        super(taskDescription);
+        this.taskDescription = taskDescription;
         this.isDone = false;
     }
 
@@ -27,8 +23,7 @@ public class Todo extends Task {
         return String.format("[Todo]%s %s", tickString, this.taskDescription);
     }
 
-    @Override
     public String toFileFormat() {
-        return "T | " + (isDone ? "1" : "0") + " | " + taskDescription;
+        return "Todo | " + (isDone ? "1" : "0") + " | " + taskDescription;
     }
 }

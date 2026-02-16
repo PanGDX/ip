@@ -29,6 +29,7 @@ public class Event extends Todo {
 
     @Override
     public String toFileFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + eventStartTime + "-" + eventEndTime;
+        return "Event | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + eventStartTime + "-"
+                + eventEndTime;
     }
 }

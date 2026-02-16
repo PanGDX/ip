@@ -23,6 +23,6 @@ public class Deadline extends Todo {
 
     @Override
     public String toFileFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + deadlineTime;
+        return "Deadline | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + deadlineTime;
     }
 }
