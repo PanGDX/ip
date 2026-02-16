@@ -26,4 +26,9 @@ public class Todo extends Task {
         String tickString = isDone ? "[x]" : "[ ]";
         return String.format("[Todo]%s %s", tickString, this.taskDescription);
     }
+
+    @Override
+    public String toFileFormat() {
+        return "T | " + (isDone ? "1" : "0") + " | " + taskDescription;
+    }
 }

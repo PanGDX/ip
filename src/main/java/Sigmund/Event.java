@@ -4,10 +4,11 @@ public class Event extends Todo {
     private String eventStartTime;
     private String eventEndTime;
 
-    public Event(boolean isDone, String taskDescription, String eventStartTime, String eventEndTime) {
+    public Event(String taskDescription, String eventStartTime, String eventEndTime) {
         super(taskDescription);
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
+        this.isDone = false;
     }
 
     public String getEventStartTime() {
@@ -24,5 +25,10 @@ public class Event extends Todo {
         String suffixTimeString = " (from: %s to: %s)";
         suffixTimeString = String.format(suffixTimeString, this.eventStartTime, this.eventEndTime);
         return String.format("[Event]%s %s %s", tickString, this.taskDescription, suffixTimeString);
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "E | " + (isDone ? "1" : "0") + " | " + taskDescription + " | " + eventStartTime + "-" + eventEndTime;
     }
 }
