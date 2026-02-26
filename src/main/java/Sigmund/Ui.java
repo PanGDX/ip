@@ -80,15 +80,26 @@ public class Ui {
             list (or ls)
                Shows all tasks in your list.
 
-            mark <task_number>
-               Marks task as done.
+            mark (or tick) <task_number>
+               Marks a task as done.
                Ex: mark 1
 
-            unmark <task_number>
-               Marks task as not done.
+            unmark (or untick) <task_number>
+               Marks a task as not done.
                Ex: unmark 1
 
+            delete <task_number>
+               Deletes a task from your list.
+               Ex: delete 2
+
+            find <keyword>
+               Finds tasks matching the specified keyword in their description.
+               Ex: find book
+
             --- OTHER ---
+            help
+               Shows this help message.
+
             bye (or exit)
                Exits the program.
             """;
