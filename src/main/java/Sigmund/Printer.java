@@ -1,13 +1,25 @@
 package Sigmund;
 
+/**
+ * Utility class for handling console output formatting and UI elements.
+ */
 public class Printer {
    public static final String ANSI_RESET = "\u001B[0m";
    public static final String LINE = "____________________________________________________________";
 
+   /**
+    * Prints a string to the console with a specified ANSI color.
+    * 
+    * @param text  The text to be printed.
+    * @param color The TextColor enum representing the desired ANSI color.
+    */
    public static void printColoredText(String text, TextColor color) {
       System.out.println(color.getAnsiCode() + text + ANSI_RESET);
    }
 
+   /**
+    * Prints the initial welcome logo and greeting message to the user.
+    */
    public static void printWelcome() {
       String logo = """
             Hello! I'm Sigmund
@@ -18,6 +30,9 @@ public class Printer {
       System.out.println(LINE);
    }
 
+   /**
+    * Prints a detailed list of available commands and their usage instructions.
+    */
    public static void printHelp() {
       String helpMessage = """
             I can help you with these commands:

@@ -1,5 +1,8 @@
 package Sigmund;
 
+/**
+ * Represents a task that has a deadline
+ */
 public class Deadline extends Todo {
     private String deadlineTime;
 

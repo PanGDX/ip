@@ -1,5 +1,9 @@
 package Sigmund;
 
+/**
+ * Manages the in-memory list of tasks and coordinates logic for adding, 
+ * deleting, and marking tasks.
+ */
 import java.util.ArrayList;
 import static Sigmund.Printer.*;
 
@@ -7,11 +11,24 @@ class TaskList {
     private ArrayList<Todo> tasks;
     private Storage storage;
 
+    /**
+     * Initializes the TaskList by loading existing tasks from storage.
+     * 
+     * @param storage The Storage instance used for persistence.
+     */
     public TaskList(Storage storage) {
         this.storage = storage;
         this.tasks = storage.load();
     }
 
+    /**
+     * Converts a string input into a valid 1-based task index.
+     * 
+     * @param s The string representing the task number.
+     * @return The integer task number.
+     * @throws SigmundException      If the number is out of the list bounds.
+     * @throws NumberFormatException If the string cannot be parsed as an integer.
+     */
     private int getValidTaskIndexFromString(String s) throws SigmundException, NumberFormatException {
 
         int taskNumber = Integer.parseInt(s); // throws NumberFormatException by default
@@ -22,6 +39,11 @@ class TaskList {
         return taskNumber;
     }
 
+    /**
+     * Adds a new task to the list and triggers an auto-save.
+     * 
+     * @param task The task object to be added.
+     */
     public void addTask(Todo task) {
         if (task != null) {
             tasks.add(task);
@@ -32,6 +54,12 @@ class TaskList {
         }
     }
 
+    /**
+     * Removes a task from the list based on its index and updates storage.
+     * 
+     * @param arg The string index of the task to be deleted.
+     * @throws SigmundException If the index is invalid.
+     */
     public void deleteTask(String arg) throws NumberFormatException, SigmundException {
         int taskNumber = getValidTaskIndexFromString(arg);
 
@@ -42,6 +70,14 @@ class TaskList {
         printColoredText("Now you have " + tasks.size() + " tasks in the list", TextColor.BLUE);
     }
 
+    private void save() {
+        storage.save(tasks);
+    }
+
+    /**
+     * Displays all current tasks in the list to the console with color-coded
+     * status.
+     */
     public void printList() {
         if (tasks.size() == 0) { // guard for empty list
             printColoredText("No tasks! Time to take a break!", TextColor.BLUE);
@@ -61,10 +97,13 @@ class TaskList {
         }
     }
 
-    private void save() {
-        storage.save(tasks);
-    }
-
+    /**
+     * Handles the logic for marking or unmarking a task as done based on user
+     * input.
+     * 
+     * @param line The command string (e.g., "mark 1").
+     * @throws SigmundException If the task index is invalid.
+     */
     public void markLogic(String line) throws NumberFormatException, SigmundException {
         int taskNumber = getValidTaskIndexFromString(line.split(" ")[1]);
 

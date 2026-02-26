@@ -4,17 +4,37 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import static Sigmund.Printer.*;
 
+/**
+ * The main entry point for the Sigmund chatbot application.
+ * Handles the input loop and command delegation.
+ */
 public class Sigmund {
     private static final String FILE_PATH = Paths.get("data", "tasks.txt").toString();
     private static Storage storage = new Storage(FILE_PATH);
     private static TaskList taskList = new TaskList(storage);
 
+    /**
+     * Validates that a task description is not empty or whitespace only.
+     * 
+     * @param description The string to check.
+     * @throws SigmundException If the description is empty.
+     */
     private static void checkEmptyDescription(String description) throws SigmundException {
         if (description.strip().isEmpty()) {
             throw new SigmundException("OOPS!!! The description cannot be empty!");
         }
     }
 
+    /**
+     * Parses the user input and executes the corresponding logic for tasks and
+     * commands.
+     * 
+     * @param line    The full raw input line from the user.
+     * @param scanner The scanner instance to read additional details for multi-line
+     *                inputs.
+     * @throws SigmundException If the command is unknown or arguments are invalid.
+     * @throws BreakSignal      If the user requests to exit the program.
+     */
     public static void handleCommand(String line, Scanner scanner) throws SigmundException, BreakSignal {
         String[] lineParts = line.split(" ", 2); // only splits ONCE
 

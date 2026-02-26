@@ -1,5 +1,8 @@
 package Sigmund;
 
+/**
+ * Enum containing ANSI escape code for printing colored text
+ */
 public enum TextColor {
     RED("\u001B[31m"),
     GREEN("\u001B[32m"),

@@ -6,13 +6,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles reading from and writing to the hard disk to ensure task persistence.
+ */
 class Storage {
     private final String filePath;
 
+    /**
+     * Initializes storage with a specific file path.
+     * 
+     * @param filePath The path to the text file where data is stored.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the data file. Returns an empty list if the file does not
+     * exist.
+     * 
+     * @return An ArrayList of tasks loaded from the file.
+     */
     public ArrayList<Todo> load() {
         ArrayList<Todo> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -40,8 +54,10 @@ class Storage {
     }
 
     /**
-     * Saves the current list of tasks to the file.
-     * Creates directories if they don't exist.
+     * Saves the current list of tasks to the data file in a machine-readable
+     * format.
+     * 
+     * @param tasks The list of tasks to be written to disk.
      */
     public void save(ArrayList<Todo> tasks) {
         try {
@@ -64,8 +80,11 @@ class Storage {
     }
 
     /**
-     * Helper to convert a file line back into a Todo object.
-     * Throws exception if data is malformed (Stretch Goal).
+     * Parses a single line from the data file into a specific Task object.
+     * 
+     * @param line The raw line from the text file.
+     * @return A Todo, Deadline, or Event object.
+     * @throws IllegalArgumentException If the line format is corrupted.
      */
     private Todo parseLineToTask(String line) {
         // Splitting by " | "

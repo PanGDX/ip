@@ -1,5 +1,8 @@
 package Sigmund;
 
+/**
+ * Represents a task that occurs within a specific time range
+ */
 public class Event extends Todo {
     private String eventStartTime;
     private String eventEndTime;
@@ -19,6 +22,9 @@ public class Event extends Todo {
         return this.eventEndTime;
     }
 
+    /**
+     * Returns a string representation of the event including its time range.
+     */
     @Override
     public String toString() {
         String tickString = isDone ? "[x]" : "[ ]";
