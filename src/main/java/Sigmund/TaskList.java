@@ -127,4 +127,28 @@ class TaskList {
         ui.showResponse(formatString);
     }
 
+    public void findBySubString(String query) {
+        if (tasks.size() == 0) { // guard for empty list
+            ui.showResponse("No tasks! Time to take a break!");
+            return;
+        }
+
+        boolean isNonZero = false;
+        ui.showResponse("Here are the matching tasks in your list!");
+        for (int i = 0; i < tasks.size(); i++) {
+
+            String listItem = tasks.get(i).toString();
+            if (listItem.contains(query)) {
+                isNonZero = true;
+                if (((Todo) tasks.get(i)).isDone()) {
+                    ui.showDone((i + 1) + ". " + listItem);
+                } else {
+                    ui.showNotDone((i + 1) + ". " + listItem);
+                }
+            }
+        }
+        if (!isNonZero)
+            ui.showError("Jebaited! Nothing here but dust!");
+    }
+
 }

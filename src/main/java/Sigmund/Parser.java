@@ -42,7 +42,6 @@ public class Parser {
         switch (command) {
             case "bye":
             case "exit":
-                ui.showLine();
                 ui.showResponse("BYE BYE! See you again!");
                 throw new BreakSignal("Exit requested");
 
@@ -60,6 +59,11 @@ public class Parser {
             case "tick":
             case "untick":
                 taskList.markLogic(line);
+                break;
+
+            case "find":
+                checkEmptyDescription(description);
+                taskList.findBySubString(description);
                 break;
 
             case "delete":
