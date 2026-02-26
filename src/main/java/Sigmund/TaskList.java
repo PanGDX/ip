@@ -5,11 +5,12 @@ package Sigmund;
  * deleting, and marking tasks.
  */
 import java.util.ArrayList;
-import static Sigmund.Printer.*;
+import static Sigmund.Ui.*;
 
 class TaskList {
     private ArrayList<Todo> tasks;
     private Storage storage;
+    private Ui ui = new Ui();
 
     /**
      * Initializes the TaskList by loading existing tasks from storage.
@@ -47,9 +48,9 @@ class TaskList {
     public void addTask(Todo task) {
         if (task != null) {
             tasks.add(task);
-            printColoredText("Got it! Added: ", TextColor.BLUE);
-            printColoredText("    " + task.toString(), TextColor.BLUE);
-            printColoredText(String.format("You now have %d tasks in the list", tasks.size() - 1), TextColor.BLUE);
+            ui.showResponse("Got it! Added: ");
+            ui.showResponse("    " + task.toString());
+            ui.showResponse(String.format("You now have %d tasks in the list", tasks.size() - 1));
             save(); // Auto-save
         }
     }
@@ -63,11 +64,11 @@ class TaskList {
     public void deleteTask(String arg) throws NumberFormatException, SigmundException {
         int taskNumber = getValidTaskIndexFromString(arg);
 
-        printColoredText("Noted. I've removed this task:", TextColor.BLUE);
-        printColoredText(" " + tasks.get(taskNumber - 1).toString(), TextColor.BLUE);
+        ui.showResponse("Noted. I've removed this task:");
+        ui.showResponse(" " + tasks.get(taskNumber - 1).toString());
         tasks.remove(taskNumber - 1);
         save();
-        printColoredText("Now you have " + tasks.size() + " tasks in the list", TextColor.BLUE);
+        ui.showResponse("Now you have " + tasks.size() + " tasks in the list");
     }
 
     private void save() {
@@ -80,19 +81,17 @@ class TaskList {
      */
     public void printList() {
         if (tasks.size() == 0) { // guard for empty list
-            printColoredText("No tasks! Time to take a break!", TextColor.BLUE);
+            ui.showResponse("No tasks! Time to take a break!");
             return;
         }
 
-        printColoredText("Here are the tasks in your list!", TextColor.BLUE);
+        ui.showResponse("Here are the tasks in your list!");
         for (int i = 0; i < tasks.size(); i++) {
             String listItem = tasks.get(i).toString();
-            if (tasks.get(i).getClass() == Todo.class) {
-                printColoredText((i + 1) + ". " + listItem, TextColor.BLUE);
-            } else if (((Todo) tasks.get(i)).isDone()) {
-                printColoredText((i + 1) + ". " + listItem, TextColor.GREEN);
+            if (((Todo) tasks.get(i)).isDone()) {
+                ui.showDone((i + 1) + ". " + listItem);
             } else {
-                printColoredText((i + 1) + ". " + listItem, TextColor.RED);
+                ui.showNotDone((i + 1) + ". " + listItem);
             }
         }
     }
@@ -108,12 +107,12 @@ class TaskList {
         int taskNumber = getValidTaskIndexFromString(line.split(" ")[1]);
 
         if (taskNumber > tasks.size() || taskNumber == 0) {
-            printColoredText("INVALID! CHILL OUT", TextColor.BLUE);
+            ui.showResponse("INVALID! CHILL OUT");
             return;
         }
 
         String formatString;
-        if (line.toLowerCase().startsWith("mark")) {
+        if (line.toLowerCase().startsWith("mark") || line.toLowerCase().startsWith("tick")) {
             tasks.get(taskNumber - 1).setDone(true);
             formatString = String.format(
                     "GREAT JOB! I've marked this task as done:\n%s",
@@ -125,7 +124,7 @@ class TaskList {
                     tasks.get(taskNumber - 1).toString());
         }
         save();
-        printColoredText(formatString, TextColor.BLUE);
+        ui.showResponse(formatString);
     }
 
 }

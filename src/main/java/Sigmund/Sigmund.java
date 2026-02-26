@@ -2,7 +2,7 @@ package Sigmund;
 
 import java.nio.file.Paths;
 import java.util.Scanner;
-import static Sigmund.Printer.*;
+import static Sigmund.Ui.*;
 
 /**
  * The main entry point for the Sigmund chatbot application.
@@ -10,118 +10,44 @@ import static Sigmund.Printer.*;
  */
 public class Sigmund {
     private static final String FILE_PATH = Paths.get("data", "tasks.txt").toString();
-    private static Storage storage = new Storage(FILE_PATH);
-    private static TaskList taskList = new TaskList(storage);
+    private Storage storage;
+    private TaskList taskList;
+    private Ui ui;
+    private Parser parser;
 
-    /**
-     * Validates that a task description is not empty or whitespace only.
-     * 
-     * @param description The string to check.
-     * @throws SigmundException If the description is empty.
-     */
-    private static void checkEmptyDescription(String description) throws SigmundException {
-        if (description.strip().isEmpty()) {
-            throw new SigmundException("OOPS!!! The description cannot be empty!");
-        }
+    public Sigmund() {
+        this.ui = new Ui();
+        this.storage = new Storage(FILE_PATH);
+        this.taskList = new TaskList(storage);
+        this.parser = new Parser();
     }
 
-    /**
-     * Parses the user input and executes the corresponding logic for tasks and
-     * commands.
-     * 
-     * @param line    The full raw input line from the user.
-     * @param scanner The scanner instance to read additional details for multi-line
-     *                inputs.
-     * @throws SigmundException If the command is unknown or arguments are invalid.
-     * @throws BreakSignal      If the user requests to exit the program.
-     */
-    public static void handleCommand(String line, Scanner scanner) throws SigmundException, BreakSignal {
-        String[] lineParts = line.split(" ", 2); // only splits ONCE
-
-        String command = line;
-        String description = "";
-        if (lineParts.length == 2) {
-            // if-clause to catch the case when there is no space to split
-            command = lineParts[0];
-            description = lineParts[1];
-        }
-
-        Todo newTask = null;
-        switch (command.toLowerCase()) {
-            case "bye":
-            case "exit":
-                printColoredText(LINE, TextColor.BLUE);
-                printColoredText("BYE BYE! See you again!", TextColor.BLUE);
-                throw new BreakSignal("");
-
-            case "list":
-            case "ls":
-                taskList.printList();
-                break;
-
-            case "help":
-                printHelp();
-                break;
-
-            case "mark":
-            case "unmark":
-                taskList.markLogic(line);
-                break;
-
-            case "delete":
-                taskList.deleteTask(description);
-                break;
-
-            case "deadline":
-                checkEmptyDescription(description);
-                System.out.print("By: ");
-                String getDeadlineLine = scanner.nextLine().strip();
-
-                newTask = new Deadline(description, getDeadlineLine);
-                break;
-            case "event":
-                checkEmptyDescription(description);
-                System.out.print("From: ");
-                String getEventStartString = scanner.nextLine().strip();
-                System.out.print("To: ");
-                String getEventEndString = scanner.nextLine().strip();
-
-                newTask = new Event(description, getEventStartString, getEventEndString);
-                break;
-
-            case "todo":
-                checkEmptyDescription(description);
-                newTask = new Todo(description);
-                break;
-            default:
-                throw new SigmundException("I'm sorry, but I don't know what that means :-(");
-        }
-        taskList.addTask(newTask);
-    }
-
-    public static void main(String[] args) {
-        printWelcome();
-
+    public void run() {
+        ui.showWelcome();
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
         while (isRunning) {
             try {
                 String line = scanner.nextLine().strip();
                 System.out.println(LINE);
-                handleCommand(line, scanner);
+                parser.handleCommand(line, scanner, taskList);
             } catch (SigmundException e) {
-                printColoredText(e.toString(), TextColor.RED);
+                ui.showError(e.toString());
             } catch (BreakSignal e) {
                 isRunning = false;
             } catch (NumberFormatException e) {
-                printColoredText("The argument needs to be a number!", TextColor.RED);
+                ui.showError("The argument needs to be a number!");
             } catch (Exception e) {
-                printColoredText("NOOOOOO!!! A fatal error occurred: " + e.getMessage(), TextColor.RED);
+                ui.showError("NOOOOOO!!! A fatal error occurred: " + e.getMessage());
             } finally {
                 System.out.println(LINE);
             }
         }
         scanner.close();
+    }
+
+    public static void main(String[] args) {
+        new Sigmund().run();
     }
 
 }

@@ -3,7 +3,11 @@ package Sigmund;
 /**
  * Utility class for handling console output formatting and UI elements.
  */
-public class Printer {
+public class Ui {
+
+   public Ui() {
+   }
+
    public static final String ANSI_RESET = "\u001B[0m";
    public static final String LINE = "____________________________________________________________";
 
@@ -17,10 +21,30 @@ public class Printer {
       System.out.println(color.getAnsiCode() + text + ANSI_RESET);
    }
 
+   public void showLine() {
+      System.out.println(LINE);
+   }
+
+   public void showError(String text) {
+      printColoredText(text, TextColor.RED);
+   }
+
+   public void showResponse(String text) {
+      printColoredText(text, TextColor.BLUE);
+   }
+
+   public void showDone(String text) {
+      printColoredText(text, TextColor.GREEN);
+   }
+
+   public void showNotDone(String text) {
+      printColoredText(text, TextColor.RED);
+   }
+
    /**
     * Prints the initial welcome logo and greeting message to the user.
     */
-   public static void printWelcome() {
+   public void showWelcome() {
       String logo = """
             Hello! I'm Sigmund
             What can I do for you?
@@ -33,7 +57,7 @@ public class Printer {
    /**
     * Prints a detailed list of available commands and their usage instructions.
     */
-   public static void printHelp() {
+   public void showHelp() {
       String helpMessage = """
             I can help you with these commands:
 
