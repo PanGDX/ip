@@ -21,6 +21,9 @@ public class Ui {
       System.out.println(color.getAnsiCode() + text + ANSI_RESET);
    }
 
+   /**
+    * Helper functions
+    */
    public void showLine() {
       System.out.println(LINE);
    }
