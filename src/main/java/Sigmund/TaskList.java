@@ -50,7 +50,7 @@ class TaskList {
             tasks.add(task);
             ui.showResponse("Got it! Added: ");
             ui.showResponse("    " + task.toString());
-            ui.showResponse(String.format("You now have %d tasks in the list", tasks.size() - 1));
+            ui.showResponse(String.format("You now have %d tasks in the list", tasks.size()));
             save(); // Auto-save
         }
     }
@@ -94,6 +94,7 @@ class TaskList {
                 ui.showNotDone((i + 1) + ". " + listItem);
             }
         }
+        ui.showResponse(String.format("You now have %d tasks in the list", tasks.size()));
     }
 
     /**

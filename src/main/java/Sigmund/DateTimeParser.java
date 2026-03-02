@@ -55,8 +55,9 @@ public class DateTimeParser {
         }
 
         // 3. Final Fallback
-        Ui ui = new Ui();
-        ui.showError("Warning: Format not recognized for '" + input + "'. Returning null.");
+        // Ui ui = new Ui();
+        // ui.showError("Warning: Format not recognized for '" + input + "'. Returning
+        // null.");
         return null;
     }
 
