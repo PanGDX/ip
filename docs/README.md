@@ -1,6 +1,6 @@
 # Sigmund User Guide
 
-Sigmund is a powerful command-line task manager designed to help you stay organized with a simple, conversational interface. Whether you are tracking daily chores, upcoming deadlines, or scheduled events, Sigmund keeps everything in one place.
+Sigmund is a command-line task manager designed to help you stay organized with a simple, conversational interface.
 
 ## Adding Deadlines: `deadline`
 
@@ -60,13 +60,14 @@ Got it. I've added this task:
 
 View and organize your current tasks.
 
-*   **List:** Type `list` or `ls` to see all current tasks.
+*   **List:** Type `list` or `ls` (I Love Linux) to see all current tasks.
 *   **Mark/Tick:** Use `mark <number>` or `tick <number>` to complete a task.
 *   **Unmark/Untick:** Use `unmark <number>` or `untick <number>` to revert a task to incomplete.
 *   **Delete:** Use `delete <number>` to permanently remove a task.
 
 **Example:**
 `mark 1`
+`untick 1`
 
 **Expected Outcome:**
 ```
@@ -87,8 +88,8 @@ Search for tasks by searching for a keyword in their description.
 **Expected Outcome:**
 ```
 Here are the matching tasks in your list:
-1. [T][ ] Read book
-2. [D][ ] Return library book (by: Jun 30 2025)
+1. [Todo][ ] Read book
+2. [Deadline][ ] Return library book (by: Jun 30 2025)
 ```
 
 ## Supported Date and Time Formats
