@@ -36,6 +36,8 @@ then
     exit 1
 fi
 
+chmod 777 ./ip.jar
+
 pwd
 cd ./text-ui-test
 pwd
